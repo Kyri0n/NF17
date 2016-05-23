@@ -7,6 +7,14 @@
 	
 	<body>
 		<fieldset>
+			<legend>Connexion à l'espace coworker</legend>
+			<form method="post" action="ConnectEsp.php">
+				<p>Login:  
+				<input type="text" name="mail" placeholder="toto@wanadoo.fr">
+				<input type="submit">
+			</form>
+		</fieldset>
+		<fieldset>
 			<legend>Formulaires d'insertion de données</legend>
 			<p> Sélectionnez le type d'information que vous désirez entrer dans la base de données : <p>
 			<form method="post" action="Insert.php">
@@ -22,20 +30,6 @@
 					<option value="Formule Limitee">Formule Limitée</option>
 					<option value="Formule Illimitee">Formule Illimitée</option>
 					<option value="Conference">Conférence</option>
-				</select>
-				<input type="submit">
-			</form>
-		</fieldset> <br/>
-		<fieldset>
-			<legend>Formulaires de liaison d'objets</legend>
-			<p> Sélectionnez le type de liaison que vous désirez établir </p>
-			<form method="post" action="Relation.php">
-				<select name="choix">
-					<option value="Description">Description d'un espace</option>
-					<option value="EspaceConference">Conférence dans un espace ouvert</option>
-					<option value="EspaceFormule">Formule proposée par un espace</option>
-					<option value="CoworkerFormule">Formule souscrite par un Coworker</option>
-					<option value="CoworkerDomaine">Domaine d'activité d'un Coworker</option>
 				</select>
 				<input type="submit">
 			</form>

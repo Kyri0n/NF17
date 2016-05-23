@@ -30,9 +30,8 @@ CREATE TABLE Coworker(
 );
 
 CREATE VIEW vPersonne AS
-	SELECT C.Mail as cMail, C.Nom as cNom, C.Prenom as cPrenom, C.Age as cAge, I.Mail as iMail, I.Nom as iNom, I.Prenom as iPrenom, I.Age as iAge, M.Mail as mMail, M.Nom as mNom, M.Prenom as mPrenom, M.Age as mAge
-	FROM Coworker C, Intervenant I, Manager M;
-	
+	select mail,nom,prenom,age, 'coworker' as type from coworker union all select mail,nom,prenom,age, 'manager' as type from manager union all select mail,nom,prenom,age, 'intervenant' as type from intervenant;
+		
 CREATE TABLE Domaines_activite(
 	idDomaine INTEGER PRIMARY KEY,
 	Info VARCHAR(255)

@@ -1,6 +1,6 @@
 <html>
 	<head>
-		<title>Gestion d espace de coworking | Formulaire Objet |</title>
+		<title>Gestion d espace de coworking | Accueil |</title>
 		<meta charset="utf-8" />
 	</head>
 	<body>
