@@ -10,10 +10,10 @@
 	$vResult = pg_fetch_array($vQuery);
 	echo "Un peu de patience :)";
 	if  ($vResult[0]=='intervenant'){
-		echo "<html><meta http-equiv='refresh' content='1;URL=http://moodle.utc.fr/'></html>";
+		echo "<html><meta http-equiv='refresh' content='1;URL=http://tuxa.sme.utc/~nf17p012/intervenant.html'></html>";
 	}elseif($vResult[0]=='manager'){
-		echo "<html><meta http-equiv='refresh' content='1;URL=http://google.fr/'></html>";
+		echo "<html><meta http-equiv='refresh' content='1;URL=http://tuxa.sme.utc/~nf17p012/manager.html'></html>";
 	}elseif($vResult[0]=='coworker'){
-		echo "<html><meta http-equiv='refresh' content='1;URL=http://www.utc.fr/'></html>";
-	}	
+		echo "<html><meta http-equiv='refresh' content='1;URL=http://tuxa.sme.utc/~nf17p012/coworker.html'></html>";
+	}
 ?>
