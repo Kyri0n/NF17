@@ -24,7 +24,7 @@
 				<tr><td>Prénom:</td>  
 				<td><input type="text" name="prenom"></td></tr>
 				<tr><td>Age:</td>  
-				<td><input type="text" name="Age"></td></tr>
+				<td><input type="text" name="age"></td></tr>
 				<tr><td>Situation professionelle:</td>  
 				<td><select name="situation">
 					<option value="entrepreneur">entrepreneur</option>
@@ -32,7 +32,7 @@
 					<option value="autre">autre</option>
 				</select></td></tr>
 				<tr><td>Presentation:</td>  
-				<td><input type="text" name="Presentation" placeholder="Je pense, donc je suis"></td></tr>
+				<td><input type="text" name="presentation" placeholder="Je pense, donc je suis"></td></tr>
 				<tr><td>Domaine:</td>  
 				<td><select name="domaine">
 				<?php
