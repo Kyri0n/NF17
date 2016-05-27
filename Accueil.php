@@ -15,6 +15,41 @@
 			</form>
 		</fieldset>
 		<fieldset>
+			<legend>Inscription d'un nouveau coworker</legend>
+			<form method="post" action="AjouterCoworker.php"><table>
+				<tr><td>Email:</td>
+				<td><input type="text" name="mail" placeholder="new@coworker.fr"></td></tr>
+				<tr><td>Nom:</td>  
+				<td><input type="text" name="nom"></td></tr>
+				<tr><td>Prénom:</td>  
+				<td><input type="text" name="prenom"></td></tr>
+				<tr><td>Age:</td>  
+				<td><input type="text" name="Age"></td></tr>
+				<tr><td>Situation professionelle:</td>  
+				<td><select name="situation">
+					<option value="entrepreneur">entrepreneur</option>
+					<option value="freelance">freelance</option>
+					<option value="autre">autre</option>
+				</select></td></tr>
+				<tr><td>Presentation:</td>  
+				<td><input type="text" name="Presentation" placeholder="Je pense, donc je suis"></td></tr>
+				<tr><td>Domaine:</td>  
+				<td><select name="domaine">
+				<?php
+					include "connect.php";
+					$vConn = fConnect();
+					$vSql="SELECT * FROM domaines_activite";
+					$vQuery=pg_query($vConn, $vSql);
+					while ($vResult = pg_fetch_array($vQuery, null, PGSQL_BOTH)) {
+    			echo "<option value='$vResult[0]'>$vResult[1]</option>";
+  }
+				?>
+				</select></td></tr>
+				</table><p>
+				<input type="submit">
+			</form>
+		</fieldset>
+		<fieldset>
 			<legend>Formulaires d'insertion de données</legend>
 			<p> Sélectionnez le type d'information que vous désirez entrer dans la base de données : <p>
 			<form method="post" action="Insert.php">

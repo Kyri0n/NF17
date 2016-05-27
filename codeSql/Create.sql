@@ -3,7 +3,7 @@
 
 BEGIN TRANSACTION;
 CREATE TABLE Manager(
-	idManager INTEGER PRIMARY KEY,
+	idManager SERIAL PRIMARY KEY,
 	Mail VARCHAR(30),
 	Nom VARCHAR(30) NOT NULL,
 	Prenom VARCHAR(30) NOT NULL,
@@ -11,7 +11,7 @@ CREATE TABLE Manager(
 );
 
 CREATE TABLE Intervenant(
-	idIntervenant INTEGER PRIMARY KEY,
+	idIntervenant SERIAL PRIMARY KEY,
 	Mail VARCHAR(30),
 	Nom VARCHAR(30) NOT NULL,
 	Prenom VARCHAR(30) NOT NULL,
@@ -20,7 +20,7 @@ CREATE TABLE Intervenant(
 
 
 CREATE TABLE Coworker(
-	idCoworker INTEGER PRIMARY KEY,
+	idCoworker SERIAL PRIMARY KEY,
 	Mail VARCHAR(30),
 	Nom VARCHAR(30) NOT NULL,
 	Prenom VARCHAR(30) NOT NULL,
@@ -33,7 +33,7 @@ CREATE VIEW vPersonne AS
 	select mail,nom,prenom,age, 'coworker' as type from coworker union all select mail,nom,prenom,age, 'manager' as type from manager union all select mail,nom,prenom,age, 'intervenant' as type from intervenant;
 		
 CREATE TABLE Domaines_activite(
-	idDomaine INTEGER PRIMARY KEY,
+	idDomaine SERIAL PRIMARY KEY,
 	Info VARCHAR(255)
 );
 
@@ -44,7 +44,7 @@ CREATE TABLE Assoc_CoworkerDomaine(
 );
 
 CREATE TABLE Espace(
-	idEspace INTEGER PRIMARY KEY,
+	idEspace SERIAL PRIMARY KEY,
 	Adresse VARCHAR(128),
 	Surface INTEGER NOT NULL CHECK(Surface > 0),
 	Nb_Bureau_Individuel INTEGER NOT NULL CHECK(Nb_Bureau_Individuel > 0),
@@ -53,7 +53,7 @@ CREATE TABLE Espace(
 );
 
 CREATE TABLE Elements_descripteurs(
-	idElement INTEGER PRIMARY KEY,
+	idElement SERIAL PRIMARY KEY,
 	Info VARCHAR(255)
 );
 
@@ -64,7 +64,7 @@ CREATE TABLE Description(
 );
 
 CREATE TABLE Salles_Collectives(
-	ID_Salle INTEGER,
+	ID_Salle SERIAL,
 	ID_Espace INTEGER REFERENCES Espace(idEspace),
 	Nb_Place INTEGER NOT NULL CHECK(Nb_Place > 0),
 	PRIMARY KEY (ID_Salle, ID_Espace)
