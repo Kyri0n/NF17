@@ -46,6 +46,7 @@
 				?>
 				</select></td></tr>
 				</table><p>
+<input type="hidden" name="modifier" value="0">
 				<input type="submit">
 			</form>
 		</fieldset>

@@ -4,7 +4,7 @@
 BEGIN TRANSACTION;
 CREATE TABLE Manager(
 	idManager SERIAL PRIMARY KEY,
-	Mail VARCHAR(30),
+	Mail VARCHAR(30) UNIQUE NOT NULL,
 	Nom VARCHAR(30) NOT NULL,
 	Prenom VARCHAR(30) NOT NULL,
 	Age INTEGER NOT NULL CHECK(Age > 0)
@@ -12,7 +12,7 @@ CREATE TABLE Manager(
 
 CREATE TABLE Intervenant(
 	idIntervenant SERIAL PRIMARY KEY,
-	Mail VARCHAR(30),
+	Mail VARCHAR(30) UNIQUE NOT NULL,
 	Nom VARCHAR(30) NOT NULL,
 	Prenom VARCHAR(30) NOT NULL,
 	Age INTEGER NOT NULL CHECK(Age > 0)
@@ -21,7 +21,7 @@ CREATE TABLE Intervenant(
 
 CREATE TABLE Coworker(
 	idCoworker SERIAL PRIMARY KEY,
-	Mail VARCHAR(30),
+	Mail VARCHAR(30) UNIQUE NOT NULL,
 	Nom VARCHAR(30) NOT NULL,
 	Prenom VARCHAR(30) NOT NULL,
 	Age INTEGER NOT NULL CHECK(Age > 0),
@@ -109,9 +109,10 @@ CREATE TABLE Assoc_Propose(
 );
 
 CREATE TABLE Assoc_CoworkerFormule(
-	DateCF DATE PRIMARY KEY,
+	DateCF DATE,
 	Nom_Formule VARCHAR(30) REFERENCES Formule(Nom),
-	Coworker INTEGER REFERENCES Coworker(idCoworker)
+	Coworker INTEGER REFERENCES Coworker(idCoworker),
+	 PRIMARY KEY(DateCF,Nom_Formule,Coworker)
 );
 
 CREATE TABLE Conference(

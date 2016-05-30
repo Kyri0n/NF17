@@ -8,12 +8,18 @@
 	$vSql="SELECT type FROM vPersonne WHERE mail='$mail'";
 	$vQuery=pg_query($vConn, $vSql);
 	$vResult = pg_fetch_array($vQuery);
-	echo "Un peu de patience :)";
+	
 	if  ($vResult[0]=='intervenant'){
-		echo "<html><meta http-equiv='refresh' content='1;URL=http://tuxa.sme.utc/~nf17p012/intervenant.html'></html>";
+		echo "Un peu de patience :)";
+		echo "<html><meta http-equiv='refresh' content='1;URL=http://tuxa.sme.utc/~nf17p012/intervenant.php?mail=$mail'></html>";
 	}elseif($vResult[0]=='manager'){
-		echo "<html><meta http-equiv='refresh' content='1;URL=http://tuxa.sme.utc/~nf17p012/manager.html'></html>";
+		echo "Un peu de patience :)";
+		echo "<html><meta http-equiv='refresh' content='1;URL=http://tuxa.sme.utc/~nf17p012/manager.php?mail=$mail'></html>";
 	}elseif($vResult[0]=='coworker'){
-		echo "<html><meta http-equiv='refresh' content='1;URL=http://tuxa.sme.utc/~nf17p012/coworker.html'></html>";
+		echo "Un peu de patience :)";
+		echo "<html><meta http-equiv='refresh' content='1;URL=http://tuxa.sme.utc/~nf17p012/coworker.php?mail=$mail'></html>";
+	}else{
+		echo ": ( Vous n'avez pas encore incrit";
+		echo "<html><meta http-equiv='refresh' content='1;URL=http://tuxa.sme.utc/~nf17p012/Accueil.php'></html>";
 	}
 ?>
