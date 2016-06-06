@@ -63,7 +63,6 @@
 				<td><input type="text" name="presentation" value='<?php echo "$result[6]"?>'></td></tr>
 				<tr><td>Domaine:</td><td>
 					<table>
-
 					<?php
 						$coworkid = $result[0];
 						$vSql="SELECT * from domaines_activite where iddomaine in (SELECT info_domaine FROM assoc_coworkerdomaine where coworker=$coworkid)";
@@ -93,6 +92,7 @@
 						echo "<option value='$vResult[0]'>$vResult[1]</option>";
 					}
 					echo "</select></td></tr>";
+					pg_close($vConn);
 				?>
 				</td></tr>
 				</table><p>
