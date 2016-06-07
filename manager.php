@@ -57,7 +57,64 @@
    <?php echo "<input type='hidden' name='mail' value='$mail'/>"; ?>
    <input type="submit" name="Attribuer la salle"/>
 	</form>
+	</fieldset>
 
+	<fieldset>
+	  <legend>STAT</legend>
+	  <fieldset>
+  	  <legend>Mois actualle</legend>
+		  <?php
+			$vSql="SELECT idEspace, adresse FROM espace where id=(SELECT idmanager FROM manager where mail='$mail')";
+		 	$esp=pg_query($vConn,$vSql);
+			echo "<table border='1'><tr><th>idEspace</th><th>Adresse</th>
+			<th>Nb coworker</th><th>Taux d'occupation</th>
+			<th>Chiffre d'affaire</th></tr>";
+		 	while($espResult=pg_fetch_array($esp,null,PGSQL_BOTH)){
+				$vSql="SELECT COUNT(ap.Nom_Formule),COUNT(ac.coworker) FROM Assoc_Propose ap,Assoc_CoworkerFormule ac
+					where ap.ID_Espace='$espResult[0]' and
+					ac.Nom_Formule=ap.Nom_Formule  and EXTRACT(MONTH FROM ac.DateCF)=EXTRACT(MONTH FROM now())";
+			 	$nbFormuleActANDnbCoworker=pg_fetch_array(pg_query($vConn,$vSql));
+
+				$vSql="SELECT SUM(e.nb_bureau_individuel)+SUM(sc.Nb_Place) FROM espace e, assoc_propose a,Salles_Collectives sc
+					WHERE e.idespace= a.id_espace and a.ID_Espace='$espResult[0]' AND sc.ID_Espace=a.id_espace";
+				$placeMax=pg_fetch_row(pg_query($vConn, $vSql));
+				$tauxOccupation  = $nbFormuleActANDnbCoworker[1]/$placeMax[0]*100;
+				$vSql="SELECT COUNT(ac.coworker)*f.Tarif FROM Assoc_Propose ap,Assoc_CoworkerFormule ac,formule f where ID_Espace='$espResult[0]' and
+					ac.Nom_Formule=ap.Nom_Formule and EXTRACT(MONTH FROM ac.DateCF)=EXTRACT(MONTH FROM now()) GROUP BY f.tarif,ac.Nom_Formule";
+			 	$chiffreAffaire=pg_fetch_row(pg_query($vConn,$vSql));
+				echo "<tr><td>$espResult[0]</td><td>$espResult[1]</td><td>$nbFormuleActANDnbCoworker[0]</td>
+				<td>$tauxOccupation%</td><td>$chiffreAffaire[0]</td></tr>";
+		 	}
+			echo "</table>";
+			?>
+		</fieldset>
+		<fieldset>
+			<legend>Année actualle</legend>
+			<?php
+			$vSql="SELECT idEspace, adresse FROM espace where id=(SELECT idmanager FROM manager where mail='$mail')";
+			$esp=pg_query($vConn,$vSql);
+			echo "<table border='1'><tr><th>idEspace</th><th>Adresse</th>
+			<th>Nb coworker</th><th>Taux d'occupation</th>
+			<th>Chiffre d'affaire</th></tr>";
+			while($espResult=pg_fetch_array($esp,null,PGSQL_BOTH)){
+				$vSql="SELECT COUNT(ap.Nom_Formule),COUNT(ac.coworker) FROM Assoc_Propose ap,Assoc_CoworkerFormule ac
+					where ap.ID_Espace='$espResult[0]' and
+					ac.Nom_Formule=ap.Nom_Formule  and EXTRACT(YEAR FROM ac.DateCF)=EXTRACT(YEAR FROM now())";
+				$nbFormuleActANDnbCoworker=pg_fetch_array(pg_query($vConn,$vSql));
+
+				$vSql="SELECT SUM(e.nb_bureau_individuel)+SUM(sc.Nb_Place) FROM espace e, assoc_propose a,Salles_Collectives sc
+					WHERE e.idespace= a.id_espace and a.ID_Espace='$espResult[0]' AND sc.ID_Espace=a.id_espace";
+				$placeMax=pg_fetch_row(pg_query($vConn, $vSql));
+				$tauxOccupation  = $nbFormuleActANDnbCoworker[1]/$placeMax[0]*100;
+				$vSql="SELECT COUNT(ac.coworker)*f.Tarif FROM Assoc_Propose ap,Assoc_CoworkerFormule ac,formule f where ID_Espace='$espResult[0]' and
+					ac.Nom_Formule=ap.Nom_Formule and EXTRACT(YEAR FROM ac.DateCF)=EXTRACT(YEAR FROM now()) GROUP BY f.tarif,ac.Nom_Formule";
+				$chiffreAffaire=pg_fetch_row(pg_query($vConn,$vSql));
+				echo "<tr><td>$espResult[0]</td><td>$espResult[1]</td><td>$nbFormuleActANDnbCoworker[0]</td>
+				<td>$tauxOccupation%</td><td>$chiffreAffaire[0]</td></tr>";
+			}
+			echo "</table>";
+			?>
+		</fieldset>
 	</fieldset>
 </body>
 </html>
