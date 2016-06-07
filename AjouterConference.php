@@ -1,10 +1,11 @@
 <?php
 include "connect.php";
 $vConn = fConnect();
+$mail=$_GET["mail"];
 $Titre=$_POST["Titre"];
 $DateC=$_POST["DateC"];
 $Resume=$_POST["Resume"];
-$idIntervenant=$_POST["id"];
+$idIntervenant=$_POST["idIntervenant"];
 $idcoworker=$_POST["idcoworker"];
 if($idIntervenant){
     $vSql="INSERT INTO Conference(Titre,DateC,Resume,Intervenant) values('$Titre','$DateC','$Resume',$idIntervenant)";
@@ -14,4 +15,5 @@ if($idIntervenant){
 
 $vQuery=pg_query($vConn, $vSql);
 echo "<meta charset='utf-8' />Ajout terminé avec succès";
+echo "<meta http-equiv='refresh' content='1;URL=http://tuxa.sme.utc/~nf17p012/coworker.php?mail=$mail'>";
 ?>

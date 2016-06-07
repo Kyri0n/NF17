@@ -106,6 +106,7 @@
 		<form action="AjouterConference.php" method="post">
 			<?php
 				echo "<input type='hidden' name='idcoworker' value='$idcoworker'>";
+				echo "<input type='hidden' name='mail' value='$mail'>";
 			?>
 			<tr> <td> <label for="Titre"> Titre : </label> </td>
 			<td> <input type="text" name="Titre" id="Titre"/> </td> </tr>

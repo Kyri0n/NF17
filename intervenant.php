@@ -16,7 +16,8 @@
         $vQuery=pg_query($vConn, $vSql);
         $result=pg_fetch_row($vQuery);
         $idIntervenant=$result[0];
-        echo "<input type='hidden' name='id' value='$idIntervenant'>";
+		echo "<input type='hidden' name='mail' value='$mail'>";
+        echo "<input type='hidden' name='idIntervenant' value='$idIntervenant'>";
         pg_close($vConn);
     ?>
 
