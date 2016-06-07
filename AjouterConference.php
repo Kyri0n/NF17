@@ -1,7 +1,7 @@
 <?php
 include "connect.php";
 $vConn = fConnect();
-$mail=$_GET["mail"];
+$mail=$_POST["mail"];
 $Titre=$_POST["Titre"];
 $DateC=$_POST["DateC"];
 $Resume=$_POST["Resume"];
