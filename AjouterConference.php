@@ -4,10 +4,14 @@ $vConn = fConnect();
 $Titre=$_POST["Titre"];
 $DateC=$_POST["DateC"];
 $Resume=$_POST["Resume"];
-$id=$_POST["id"];
+$idIntervenant=$_POST["id"];
+$idcoworker=$_POST["idcoworker"];
+if($idIntervenant){
+    $vSql="INSERT INTO Conference(Titre,DateC,Resume,Intervenant) values('$Titre','$DateC','$Resume',$idIntervenant)";
+}else{
+    $vSql="INSERT INTO Conference(Titre,DateC,Resume,Coworker) values('$Titre','$DateC','$Resume',$idcoworker)";
+}
 
-$mail=$_GET["mail"];
-$vSql="INSERT INTO Conference(Titre,DateC,Resume,Intervenant) values('$Titre','$DateC','$Resume',$id)";
 $vQuery=pg_query($vConn, $vSql);
 echo "<meta charset='utf-8' />Ajout terminé avec succès";
 ?>

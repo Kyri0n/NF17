@@ -92,13 +92,30 @@
 						echo "<option value='$vResult[0]'>$vResult[1]</option>";
 					}
 					echo "</select></td></tr>";
-					pg_close($vConn);
+
 				?>
 				</td></tr>
 				</table><p>
 <input type="hidden" name="modifier" value="True">
 				<input type="submit" value='modifier'>
 				</form>
+</fieldset>
+<fieldset>
+	<table>
+		<legend> Ajout d'une Conférence </legend>
+		<form action="AjouterConference.php" method="post">
+			<?php
+				echo "<input type='hidden' name='idcoworker' value='$idcoworker'>";
+			?>
+			<tr> <td> <label for="Titre"> Titre : </label> </td>
+			<td> <input type="text" name="Titre" id="Titre"/> </td> </tr>
+			<tr> <td> <label for="DateC"> Date : </label> </td>
+			<td> <input type="date" name="DateC" id="DateC" placeholder="yyyy-mm-dd"/></td> </tr>
+			<tr> <td> <label for="Resume"> Résumé : </label> </td>
+			<td> <textarea name="Resume" id="Resume"/></textarea> </td> </tr>
+	</table>
+			<input type="submit">
+		</form>
 </fieldset>
 	</body>
 </html>

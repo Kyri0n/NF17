@@ -24,11 +24,11 @@
         <table>
             <legend> Ajout d'une Conférence </legend>
                 <tr> <td> <label for="Titre"> Titre : </label> </td>
-                <td> <input type="text" name="Titre" id="Titre"/></code> </td> </tr>
+                <td> <input type="text" name="Titre" id="Titre"/> </td> </tr>
                 <tr> <td> <label for="DateC"> Date : </label> </td>
-                <td> <input type="date" name="DateC" id="DateC"/></code> </td> </tr>
+                <td> <input type="date" name="DateC" id="DateC" placeholder="yyyy-mm-dd"/> </td> </tr>
                 <tr> <td> <label for="Resume"> Résumé : </label> </td>
-                <td> <textarea name="Resume" id="Resume"/></textarea></code> </td> </tr>
+                <td> <textarea name="Resume" id="Resume"/></textarea></td> </tr>
         </table>
                 <input type="submit">
             </form>
