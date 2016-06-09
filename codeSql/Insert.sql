@@ -51,7 +51,7 @@ INSERT INTO Espace(idEspace, Adresse, Surface, Nb_Bureau_Individuel, Actif, ID)
 VALUES(100,'5 rue des chevaux bleus', 1250, 12, true, 1000);
 
 INSERT INTO Espace(idEspace, Adresse, Surface, Nb_Bureau_Individuel, Actif, ID)
-VALUES(200,'6 avenue des manches à balai', 3000, 25, true, 1000);
+VALUES(200,'6 avenue des manches à balai', 3000, 20, true, 1000);
 
 INSERT INTO Espace(idEspace, Adresse, Surface, Nb_Bureau_Individuel, Actif, ID)
 VALUES(300,'18 rue des chevaux bleus', 1250, 5, true, 1001);
@@ -75,7 +75,7 @@ INSERT INTO Actualites(Date, ID_Espace, Info)
 VALUES(TO_DATE('01-01-2016','DD-MM-YYYY'),100,'Defile de mode');
 
 INSERT INTO Actualites(Date, ID_Espace, Info)
-VALUES(TO_DATE('01-02-2016','DD-MM-YYYY'),100,'Coktail des anciens');
+VALUES(TO_DATE('01-07-2016','DD-MM-YYYY'),100,'Coktail des anciens');
 
 INSERT INTO Actualites(Date, ID_Espace, Info)
 VALUES(TO_DATE('07-09-2016','DD-MM-YYYY'),300,'Accueil des nouveaux');
@@ -85,7 +85,7 @@ INSERT INTO Salles_Collectives(ID_Salle, ID_Espace, Nb_Place)
 VALUES(15,100,50);
 
 INSERT INTO Salles_Collectives(ID_Salle, ID_Espace, Nb_Place)
-VALUES(23,300,190);
+VALUES(23,300,10);
 
 -- Formule
 INSERT INTO Formule(Nom, Tarif, Nb_Jours, Bureau_Individuel, DateFin, Type)
@@ -96,10 +96,10 @@ VALUES('A Sion',10 ,7, false, NULL, 'limite');
 
 -- Assoc_CoworkerFormule
 INSERT INTO Assoc_CoworkerFormule(DateCF, Nom_Formule, Coworker)
-VALUES(TO_DATE('01-05-2016','DD-MM-YYYY'),'Magique',3000);
+VALUES(TO_DATE('01-06-2016','DD-MM-YYYY'),'Magique',3000);
 
 INSERT INTO Assoc_CoworkerFormule(DateCF, Nom_Formule, Coworker)
-VALUES(TO_DATE('06-03-2016','DD-MM-YYYY'),'A Sion',3001);
+VALUES(TO_DATE('06-06-2016','DD-MM-YYYY'),'A Sion',3001);
 
 -- Assoc_Propose
 INSERT INTO Assoc_Propose(ID_Espace,Nom_Formule,Formule_Active)
