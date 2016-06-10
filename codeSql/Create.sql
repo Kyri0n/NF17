@@ -31,7 +31,7 @@ CREATE TABLE Coworker(
 
 CREATE VIEW vPersonne AS
 	select mail,nom,prenom,age, 'coworker' as type from coworker union all select mail,nom,prenom,age, 'manager' as type from manager union all select mail,nom,prenom,age, 'intervenant' as type from intervenant;
-		
+
 CREATE TABLE Domaines_activite(
 	idDomaine SERIAL PRIMARY KEY,
 	Info VARCHAR(255)
@@ -105,14 +105,13 @@ CREATE TABLE Assoc_Propose(
 	Nom_Formule VARCHAR(30) REFERENCES Formule(Nom),
 	Formule_Active BOOLEAN NOT NULL,
 	PRIMARY KEY (ID_Espace, Nom_Formule)--,
-	-- ???????CHECK (PROJECTION(Espace,Adresse) IN PROJECTION(Assoc_Propose,ID_Espace))
 );
 
 CREATE TABLE Assoc_CoworkerFormule(
 	DateCF DATE,
 	Nom_Formule VARCHAR(30) REFERENCES Formule(Nom),
 	Coworker INTEGER REFERENCES Coworker(idCoworker),
-	 PRIMARY KEY(DateCF,Nom_Formule,Coworker)
+	PRIMARY KEY(DateCF,Nom_Formule,Coworker)
 );
 
 CREATE TABLE Conference(
@@ -124,7 +123,7 @@ CREATE TABLE Conference(
 	ID_Espace INTEGER REFERENCES Espace(idEspace),
 	PRIMARY KEY (Titre, DateC),
 	CHECK (((Intervenant IS NULL) AND (Coworker IS NOT NULL)) OR
-		((Intervenant IS NOT NULL) AND (Coworker IS NULL))) 
+		((Intervenant IS NOT NULL) AND (Coworker IS NULL)))
 );
 
 
