@@ -101,6 +101,13 @@ VALUES(TO_DATE('01-06-2016','DD-MM-YYYY'),'Magique',3000);
 INSERT INTO Assoc_CoworkerFormule(DateCF, Nom_Formule, Coworker)
 VALUES(TO_DATE('06-06-2016','DD-MM-YYYY'),'A Sion',3001);
 
+INSERT INTO Assoc_CoworkerFormule(DateCF, Nom_Formule, Coworker)
+VALUES(TO_DATE('01-03-2016','DD-MM-YYYY'),'Magique',3000);
+INSERT INTO Assoc_CoworkerFormule(DateCF, Nom_Formule, Coworker)
+VALUES(TO_DATE('01-04-2016','DD-MM-YYYY'),'Magique',3001);
+INSERT INTO Assoc_CoworkerFormule(DateCF, Nom_Formule, Coworker)
+VALUES(TO_DATE('01-05-2016','DD-MM-YYYY'),'Magique',3001);
+
 -- Assoc_Propose
 INSERT INTO Assoc_Propose(ID_Espace,Nom_Formule,Formule_Active)
 VALUES(100,'Magique',false);

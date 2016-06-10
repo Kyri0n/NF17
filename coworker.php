@@ -8,8 +8,11 @@
 		<fieldset>
 		<legend>Actualités sur les espaces auxquels vous avez accès</legend>
 		<?php
+			include "connect.php";
+	    $vConn = fConnect();
+	    $mail=$_GET["mail"];
 		  $vSql="SELECT f.nom,f.nb_jours,f.datefin FROM formule f
-			JOIN assoc_coworkerformule a ON f.nom=a.nom_formule JOIN Coworker c ON c.idcoworker=a.coworker
+			JOIN assoc_coworkerformule ac ON f.nom=ac.nom_formule JOIN Coworker c ON c.idcoworker=ac.coworker
 			WHERE idcoworker=(SELECT idcoworker FROM coworker WHERE mail='$mail') and
 			EXTRACT(MONTH FROM ac.DateCF)=EXTRACT(MONTH FROM now()) ";
 		?>
@@ -21,7 +24,7 @@
 		   echo"<tr><td>$result[0]</td><td>$result[1]</td><td>$result[2]</td>";
 		  }
 			echo "</table>";
-			if(pg_num_rows($vQuery)){
+			if(pg_num_rows($vQuery)==0){
 				echo "Vous n'avez souscrit à aucune formule ce mois.";
 			}
 		  //après réflexion cette requête serait une raison valable de dénormaliser notre schéma, à cause du fait qu'il faille demander l'accord du client et par manque de temps nous ne le ferons pas
@@ -42,9 +45,7 @@
 <fieldset>
 			<legend>Souscription</legend>
 	<?php
-	include "connect.php";
-	$vConn = fConnect();
-	$mail=$_GET["mail"];
+	
 	$vSql="SELECT * FROM Coworker where mail='$mail'";
 	$vQuery=pg_query($vConn, $vSql);
 	$result=pg_fetch_row($vQuery);
