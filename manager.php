@@ -85,29 +85,67 @@
 	 }
 	 	echo '</table>';
 		echo "<input type='submit'>";
-		echo "</form>";
+		echo " </form>";
 	?>
 	</fieldset><br>
 	<fieldset>
 	  <legend> Attribution de salle pour les conférences</legend>
+		<form method="post" action="modifierConference.php">
 	  <?php
 	$vSql="SELECT titre,datec,resume FROM conference WHERE id_espace IS NULL";
 	 $vQuery=pg_query($vConn,$vSql);
 	 echo "<table border='1' ";
-	echo '<tr><th>Titre</th><th>Date</th><th>Résumé</th></tr>';
+	echo '<tr><th>Titre</th><th>Date</th><th>Résumé</th><th></th></tr>';
 	 while($result=pg_fetch_array($vQuery,null,PGSQL_BOTH)){
-	  echo "<tr><td>$result[0]</td><td>$result[1]</td><td>$result[2]</td></tr>";
+		echo "<tr><td>$result[0]</td><td>$result[1]</td><td>$result[2]</td>
+				<td><input type='radio' name='conference' value='$result[0],$result[1]'></td></tr>";
 	 }
+	 echo "<input type='hidden' name='mail' value='$mail'/>";
+?>
+</table>
+<SELECT name='idEsp'>
+<?php
+$vSql="SELECT e.adresse,e.idEspace
+ FROM espace e WHERE
+ e.id=(SELECT idmanager FROM manager where mail='$mail') ORDER BY e.adresse";
+ $vQuery=pg_query($vConn,$vSql);
+ while($result=pg_fetch_array($vQuery,NULL,PGSQL_BOTH)){
+	 echo "<OPTION value=$result[1]>$result[0]</OPTION>";
+ }
+?>
 
+ <input type="submit" value="Attribuer la salle"/>
+	</fieldset><br>
+
+	<fieldset>
+	  <legend>Conférences ouvertes dans les autres espaces</legend>
+		<form action="ouvrirConference.php" method="post">
+	  <?php
+			$vSql="SELECT c.titre,c.datec,c.resume,e.adresse FROM conference c,espace e WHERE c.id_espace=e.idEspace and c.id_espace NOT IN (SELECT es.idEspace
+			FROM espace es where es.id=(SELECT idmanager FROM manager where mail='$mail') )";
+			 $vQuery=pg_query($vConn,$vSql);
+			 echo "<table border='1' ";
+			echo '<tr><th>Titre</th><th>Date</th><th>Résumé</th><th>Espace</th><th></th></tr>';
+			 while($result=pg_fetch_array($vQuery,null,PGSQL_BOTH)){
+			  echo "<tr><td>$result[0]</td><td>$result[1]</td><td>$result[2]</td><td>$result[3]</td>
+						<td><input type='radio' name='conference' value='$result[0],$result[1]'></td></tr>";
+			 }
+			 echo "<input type='hidden' name='mail' value='$mail'/>";
 	?>
 	</table>
-		<form method="post" action="modifierConference.php">
-		Titre de la conférence <input type="text" name="titre" id="titre"/>
-		Date de la conférence <input type="text" name="date" id="date"/>
-    Salle à attribuer <input type="text" name="salle" id="salle"/>
-   <?php echo "<input type='hidden' name='mail' value='$mail'/>"; ?>
-   <input type="submit" name="Attribuer la salle"/>
-	</form>
+	<SELECT name='idEsp'>
+	<?php
+	$vSql="SELECT e.adresse,e.idEspace
+	 FROM espace e WHERE
+	 e.id=(SELECT idmanager FROM manager where mail='$mail') ORDER BY e.adresse";
+	 $vQuery=pg_query($vConn,$vSql);
+	 while($result=pg_fetch_array($vQuery,NULL,PGSQL_BOTH)){
+		 echo "<OPTION value=$result[1]>$result[0]</OPTION>";
+	 }
+	?>
+	<input type="submit" value="Ouvrir"/>
+ </form>
+
 	</fieldset><br>
 
 	<fieldset>

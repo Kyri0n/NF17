@@ -102,6 +102,13 @@ INSERT INTO Assoc_CoworkerFormule(DateCF, Nom_Formule, Coworker)
 VALUES(TO_DATE('06-06-2016','DD-MM-YYYY'),'A Sion',3001);
 
 INSERT INTO Assoc_CoworkerFormule(DateCF, Nom_Formule, Coworker)
+VALUES(TO_DATE('06-01-2016','DD-MM-YYYY'),'A Sion',3001);
+INSERT INTO Assoc_CoworkerFormule(DateCF, Nom_Formule, Coworker)
+VALUES(TO_DATE('06-09-2015','DD-MM-YYYY'),'A Sion',3001);
+INSERT INTO Assoc_CoworkerFormule(DateCF, Nom_Formule, Coworker)
+VALUES(TO_DATE('06-12-2015','DD-MM-YYYY'),'A Sion',3001);
+
+INSERT INTO Assoc_CoworkerFormule(DateCF, Nom_Formule, Coworker)
 VALUES(TO_DATE('01-03-2016','DD-MM-YYYY'),'Magique',3000);
 INSERT INTO Assoc_CoworkerFormule(DateCF, Nom_Formule, Coworker)
 VALUES(TO_DATE('01-04-2016','DD-MM-YYYY'),'Magique',3001);

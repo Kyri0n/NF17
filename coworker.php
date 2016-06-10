@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title>Gestion d'espace de coworking | Accueil |</title>
+		<title> Gestion d'espace de coworking | Accueil |</title>
 		<meta charset="utf-8" />
 	</head>
 	<body>
@@ -45,7 +45,7 @@
 <fieldset>
 			<legend>Souscription</legend>
 	<?php
-	
+
 	$vSql="SELECT * FROM Coworker where mail='$mail'";
 	$vQuery=pg_query($vConn, $vSql);
 	$result=pg_fetch_row($vQuery);
@@ -136,8 +136,8 @@
 				</form>
 </fieldset><br>
 <fieldset>
+	<legend> Ajout d'une Conférence </legend>
 	<table>
-		<legend> Ajout d'une Conférence </legend>
 		<form action="AjouterConference.php" method="post">
 			<?php
 				echo "<input type='hidden' name='idcoworker' value='$idcoworker'>";
@@ -154,5 +154,23 @@
 		</form>
 </fieldset><br>
 
+<fieldset>
+<legend> Votre collègue </legend>
+
+	<table>
+			<?php
+
+
+			?>
+			<tr> <td> <label for="Titre"> Titre : </label> </td>
+			<td> <input type="text" name="Titre" id="Titre"/> </td> </tr>
+			<tr> <td> <label for="DateC"> Date : </label> </td>
+			<td> <input type="date" name="DateC" id="DateC" placeholder="yyyy-mm-dd"/></td> </tr>
+			<tr> <td> <label for="Resume"> Résumé : </label> </td>
+			<td> <textarea name="Resume" id="Resume"/></textarea> </td> </tr>
+	</table>
+			<input type="submit">
+		</form>
+</fieldset><br>
 	</body>
 </html>
