@@ -155,7 +155,7 @@
 </fieldset><br>
 
 <fieldset>
-<legend> Votre collègue </legend>
+<legend> Effectifs </legend>
 <fieldset>
 <legend>Par Espace:</legend>
 <table>
