@@ -118,5 +118,34 @@
 			<input type="submit">
 		</form>
 </fieldset>
+<fieldset>
+<legend>Actualités sur les espaces auxquels vous avez accès</legend>
+<?php
+  $vSql="SELECT f.nom,f.nb_jours,f.datefin FROM formule f JOIN assoc_coworkerformule a ON f.nom=a.nom_formule JOIN Coworker c ON c.idcoworker=a.coworker WHERE idcoworker=(SELECT idcoworker FROM coworker WHERE mail='$mail') ";
+?>
+	<table border="1">
+  <tr><th>Formule</th><th>Durée</th><th>Date de fin</th></tr>
+  <?php
+  $vQuery=pg_query($vConn,$vSql);
+  while($result=pg_fetch_array($vQuery,null,PGSQL_BOTH)){
+   echo"<tr><td>$result[0]</td><td>$result[1]</td><td>$result[2]</td>";
+  }
+	echo "</table>";
+  //après réflexion cette requête serait une raison valable de dénormaliser notre schéma, à cause du fait qu'il faille demander l'accord du client et par manque de temps nous ne le ferons pas
+  $vSql="SELECT f.nom,a.info,a.date FROM actualites a JOIN espace e ON e.idespace=a.id_espace
+		JOIN assoc_propose ap ON ap.id_espace=e.idespace JOIN formule f ON ap.nom_formule=f.nom
+		JOIN Assoc_CoworkerFormule ac ON ac.Nom_Formule=f.nom JOIN Coworker c ON c.idcoworker=ac.coworker
+		WHERE idcoworker=(SELECT idcoworker FROM coworker WHERE mail='$mail') ORDER BY f.nom,a.date";
+  $vQuery=pg_query($vConn,$vSql);
+	echo "<table border='1'>";
+  echo "<tr><th>Formule</th><th>Actu</th><th>Date</th></tr>";
+  while($result=pg_fetch_array($vQuery,null,PGSQL_BOTH)){
+   echo "<tr><td>$result[0]</td><td>$result[1]</td><td>$result[2]</td>";
+  }
+
+  ?>
+</table>
+</fieldset>
+
 	</body>
 </html>
