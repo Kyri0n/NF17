@@ -31,7 +31,8 @@
 		  $vSql="SELECT DISTINCT f.nom,a.info,to_char(a.date, 'DD Mon YYYY'),a.date FROM actualites a JOIN espace e ON e.idespace=a.id_espace
 				JOIN assoc_propose ap ON ap.id_espace=e.idespace JOIN formule f ON ap.nom_formule=f.nom
 				JOIN Assoc_CoworkerFormule ac ON ac.Nom_Formule=f.nom JOIN Coworker c ON c.idcoworker=ac.coworker
-				WHERE a.date>=current_date and idcoworker=(SELECT idcoworker FROM coworker WHERE mail='$mail') ORDER BY a.date,f.nom";
+				WHERE a.date>=current_date and e.Actif=True and 
+				idcoworker=(SELECT idcoworker FROM coworker WHERE mail='$mail') ORDER BY a.date,f.nom";
 		  $vQuery=pg_query($vConn,$vSql);
 			echo "<table border='1'>";
 		  echo "<tr><th>Formule</th><th>Actu</th><th>Date</th></tr>";
@@ -51,7 +52,8 @@
 	$idcoworker=$result[0];
 	$vSql="SELECT f.nom,f.tarif,f.nb_jours,
 	CASE WHEN bureau_individuel='f' then 'Non' ELSE 'Oui' END,datefin,type,e.Adresse FROM formule f, Assoc_Propose ap, espace e
-	 WHERE f.nom=ap.Nom_Formule AND Formule_Active=True and ap.ID_Espace=e.idEspace";
+	 WHERE f.nom=ap.Nom_Formule AND e.Actif=True and
+	 Formule_Active=True and ap.ID_Espace=e.idEspace";
 	$vQuery=pg_query($vConn, $vSql);
 
 	echo "<form method='post' action='Souscrire.php?mail=$mail'>";

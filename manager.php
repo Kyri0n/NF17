@@ -36,7 +36,8 @@
 	<legend> Actualité </legend>
 	<?php
 	$vSql="SELECT DISTINCT e.idEspace, a.Info, to_char(a.date, 'DD Mon YYYY') from Actualites a, Espace e
-	WHERE a.date>=current_date and a.ID_Espace=e.idEspace and e.id=(SELECT idmanager FROM manager where mail='$mail' ORDER BY a.date)";
+	WHERE a.date>=current_date and a.ID_Espace=e.idEspace and e.Actif=True
+	and e.id=(SELECT idmanager FROM manager where mail='$mail' ORDER BY a.date)";
 	$vQuery=pg_query($vConn, $vSql);
 	echo "<table border='1'>";
 	echo '<tr><th>ID Espace</th><th>Actualites</th><th>Date</th></tr>';
