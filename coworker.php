@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<title> Gestion d'espace de coworking | Accueil |</title>
+		<title> Coworker</title>
 		<meta charset="utf-8" />
 	</head>
 	<body>
@@ -28,10 +28,10 @@
 				echo "Vous n'avez souscrit à aucune formule ce mois.";
 			}
 		  //après réflexion cette requête serait une raison valable de dénormaliser notre schéma, à cause du fait qu'il faille demander l'accord du client et par manque de temps nous ne le ferons pas
-		  $vSql="SELECT f.nom,a.info,a.date FROM actualites a JOIN espace e ON e.idespace=a.id_espace
+		  $vSql="SELECT DISTINCT f.nom,a.info,to_char(a.date, 'DD Mon YYYY'),a.date FROM actualites a JOIN espace e ON e.idespace=a.id_espace
 				JOIN assoc_propose ap ON ap.id_espace=e.idespace JOIN formule f ON ap.nom_formule=f.nom
 				JOIN Assoc_CoworkerFormule ac ON ac.Nom_Formule=f.nom JOIN Coworker c ON c.idcoworker=ac.coworker
-				WHERE a.date>=current_date and idcoworker=(SELECT idcoworker FROM coworker WHERE mail='$mail') ORDER BY f.nom,a.date";
+				WHERE a.date>=current_date and idcoworker=(SELECT idcoworker FROM coworker WHERE mail='$mail') ORDER BY a.date,f.nom";
 		  $vQuery=pg_query($vConn,$vSql);
 			echo "<table border='1'>";
 		  echo "<tr><th>Formule</th><th>Actu</th><th>Date</th></tr>";
@@ -45,22 +45,22 @@
 <fieldset>
 			<legend>Souscription</legend>
 	<?php
-
 	$vSql="SELECT * FROM Coworker where mail='$mail'";
 	$vQuery=pg_query($vConn, $vSql);
 	$result=pg_fetch_row($vQuery);
 	$idcoworker=$result[0];
-	$vSql="SELECT nom,tarif,nb_jours,
-	CASE WHEN bureau_individuel='f' then 'Non' ELSE 'Oui' END,datefin,type FROM formule";
+	$vSql="SELECT f.nom,f.tarif,f.nb_jours,
+	CASE WHEN bureau_individuel='f' then 'Non' ELSE 'Oui' END,datefin,type,e.Adresse FROM formule f, Assoc_Propose ap, espace e
+	 WHERE f.nom=ap.Nom_Formule AND Formule_Active=True and ap.ID_Espace=e.idEspace";
 	$vQuery=pg_query($vConn, $vSql);
 
 	echo "<form method='post' action='Souscrire.php?mail=$mail'>";
 	?>
 	<table border="1">
-	  <tr><th></th><th>Nom</th><th>Tarif</th><th>Durée</th><th>Bureau Individuel</th><th>Date fin</th><th>Type</th></tr>
+	  <tr><th></th><th>Nom</th><th>Tarif</th><th>Durée</th><th>Bureau Individuel</th><th>Date fin</th><th>Type</th><th>Espace Adresse</th></tr>
 	<?php
     while ($result = pg_fetch_array($vQuery, null, PGSQL_BOTH)) {
-    			echo "<tr><td><input type='checkbox' name='formule' value='$result[0]'></td><td>$result[0]</td><td>$result[1]</td><td>$result[2]</td><td>$result[3]</td><td>$result[4]</td><td>$result[5]</td></tr>";
+    			echo "<tr><td><input type='checkbox' name='formule' value='$result[0]'></td><td>$result[0]</td><td>$result[1]</td><td>$result[2]</td><td>$result[3]</td><td>$result[4]</td><td>$result[5]</td><td>$result[6]</td></tr>";
     }
     echo "<input type='hidden' name='idcoworker' value='$idcoworker'>";
   	?>
@@ -156,21 +156,62 @@
 
 <fieldset>
 <legend> Votre collègue </legend>
-
-	<table>
+<fieldset>
+<legend>Par Espace:</legend>
+<table>
 			<?php
-
-
+				$vSql="SELECT DISTINCT c.mail,c.nom,c.prenom,c.Situation_Professionelle, e.adresse, m.nom, m.prenom, m.mail
+				 FROM coworker c,espace e,Assoc_Propose ap, Assoc_CoworkerFormule ac, Manager m
+				WHERE e.idEspace=ap.ID_Espace and ap.Nom_Formule=ac.Nom_Formule and e.id=m.idManager and
+				ac.Coworker=c.idCoworker ORDER BY e.adresse,c.mail";
+				$vQuery=pg_query($vConn, $vSql);
+				$tmp='';
+				while ($vResult = pg_fetch_array($vQuery, null, PGSQL_BOTH)) {
+					if($tmp!=$vResult[4]){
+						echo"</table><br>$vResult[4]
+						<p>Manager: $vResult[5] $vResult[6]  $vResult[7]</p>
+						<table border='1'><tr><th>Mail</th><th>Nom</th><th>Prenom</th><th>Situation</th></tr>";
+					}
+					echo "<tr><td>$vResult[0]</td><td>$vResult[1]</td><td>$vResult[2]</td><td>$vResult[3]</td></tr>";
+					$tmp=$vResult[4];
+				}
 			?>
-			<tr> <td> <label for="Titre"> Titre : </label> </td>
-			<td> <input type="text" name="Titre" id="Titre"/> </td> </tr>
-			<tr> <td> <label for="DateC"> Date : </label> </td>
-			<td> <input type="date" name="DateC" id="DateC" placeholder="yyyy-mm-dd"/></td> </tr>
-			<tr> <td> <label for="Resume"> Résumé : </label> </td>
-			<td> <textarea name="Resume" id="Resume"/></textarea> </td> </tr>
 	</table>
-			<input type="submit">
-		</form>
+	</fieldset>
+	<fieldset>
+<legend>Par situation professionnelle:</legend>
+<table border="1">
+			<?php
+				$vSql="SELECT DISTINCT c.mail,c.nom,c.prenom,c.Situation_Professionelle
+				 FROM coworker c ORDER BY c.Situation_Professionelle,c.mail";
+				$vQuery=pg_query($vConn, $vSql);
+				while ($vResult = pg_fetch_array($vQuery, null, PGSQL_BOTH)) {
+					echo "<tr><td>$vResult[0]</td><td>$vResult[1]</td><td>$vResult[2]</td><td>$vResult[3]</td></tr>";
+				}
+			?>
+	</table>
+</fieldset><br>
+<fieldset>
+<legend>Par domaine d'activité:</legend>
+<table>
+			<?php
+				$vSql="SELECT DISTINCT c.mail,c.nom,c.prenom,c.Situation_Professionelle, d.Info
+				 FROM coworker c,Assoc_CoworkerDomaine ac,Domaines_activite d
+				WHERE c.idCoworker=ac.Coworker and ac.Info_Domaine=d.idDomaine
+				ORDER BY d.Info,c.mail";
+				$vQuery=pg_query($vConn, $vSql);
+				$tmp='';
+				while ($vResult = pg_fetch_array($vQuery, null, PGSQL_BOTH)) {
+					if($tmp!=$vResult[4]){
+						echo"</table><br>$vResult[4]<br>
+						<table border='1'><tr><th>Mail</th><th>Nom</th><th>Prenom</th><th>Situation</th></tr>";
+					}
+					echo "<tr><td>$vResult[0]</td><td>$vResult[1]</td><td>$vResult[2]</td><td>$vResult[3]</td></tr>";
+					$tmp=$vResult[4];
+				}
+			?>
+	</table>
+</fieldset>
 </fieldset><br>
 	</body>
 </html>

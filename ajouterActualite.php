@@ -9,6 +9,7 @@ $mail=$_POST["mail"];
 if($Date){
   $vSql="INSERT INTO Actualites values('$Date','$idEspace','$Info')";
 }else{
+  $Info="[URGENT] $Info";
   $vSql="INSERT INTO Actualites values('now()','$idEspace','$Info')";
 }
 

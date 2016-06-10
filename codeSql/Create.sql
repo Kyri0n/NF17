@@ -135,30 +135,5 @@ CREATE TABLE Assoc_Espace_Ouvert_Conference(
 	PRIMARY KEY (Titre_conf, Date_conf, ID)
 );
 
-CREATE TABLE tIntervenantSav (
-pknom varchar2(20) PRIMARY KEY,
-prenom varchar2(20) NOT NULL
-);
-
-CREATE TRIGGER trActualite
-BEFORE INSERT ON Assoc_Espace_Ouvert_Conference
-FOR EACH ROW
-DECLARE
-	Info VARCHAR(255);
-	adr VARCHAR(50);
-BEGIN
-	SELECT adresse INTO adr FROM espace where idEspace=:new.ID;
-	Info = :'Conférence ' || new.Titre_conf || ': ' || adr;
-	INSERT INTO Actualites values(:new.Date_conf,:new.ID,Info);
-END;
-
-
-
-Warning: pg_query(): Query failed: ERREUR: syntaxe en entrée invalide pour le type date : « » LINE 2: WHERE titre='' and datec='' RETURNING id_espace ^ in /volsme/user1x/users/nf17p012/public_html/modifierConference.php on line 16
-
-Warning: pg_fetch_row() expects parameter 1 to be resource, boolean given in /volsme/user1x/users/nf17p012/public_html/modifierConference.php on line 17
-
-Warning: pg_query(): Query failed: ERREUR: syntaxe en entrée invalide pour le type timestamp : « » LINE 1: INSERT INTO Actualites values('','','Conférence : ') ^ in /volsme/user1x/users/nf17p012/public_html/modifierConference.php on line 20
-La salle a été attribuée à la conférence du , un rappel a été mis sur le fils d'actualités
 
 COMMIT TRANSACTION;

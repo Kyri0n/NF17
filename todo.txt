@@ -1,4 +1,0 @@
-3 accueils
-manager: insertion modification des formules(tab formule) des espaces(tab espace)
-coworker: souscrire(tab assocCoworkerformule); voir profil(tab coworker,assoc_coworkerdomaine), ajouter son PROPRE profil() avec check utilisateur==ce qu'il veut modifier.
-

@@ -14,8 +14,10 @@
 	  $vConn = fConnect();
 	  $mail=$_GET["mail"];
 
-	  $vSql="SELECT es.adresse, es.surface, es.nb_bureau_individuel,CASE WHEN actif='true' THEN 'Oui' ELSE 'Non' END,e.info,es.idEspace
-		FROM espace es,Elements_descripteurs e,description d where es.idespace=d.id and d.descrip=e.idelement and es.id=(SELECT idmanager FROM manager where mail='$mail')";
+	  $vSql="SELECT es.adresse, es.surface, es.nb_bureau_individuel,CASE WHEN actif='true' THEN 'Oui' ELSE 'Non' END,
+		e.info,es.idEspace FROM espace es,Elements_descripteurs e,description d
+		where es.idespace=d.id and d.descrip=e.idelement and
+		es.id=(SELECT idmanager FROM manager where mail='$mail')";
 	  $vQuery=pg_query($vConn, $vSql);
 		echo "<form action='activerEsp.php' method='Post'>";
 		echo "<input type='hidden' name='mail' value='$mail'/>";
@@ -33,7 +35,7 @@
 <fieldset>
 	<legend> Actualité </legend>
 	<?php
-	$vSql="SELECT e.idEspace, a.Info, to_char(a.date, 'DD Mon YYYY') from Actualites a, Espace e
+	$vSql="SELECT DISTINCT e.idEspace, a.Info, to_char(a.date, 'DD Mon YYYY') from Actualites a, Espace e
 	WHERE a.date>=current_date and a.ID_Espace=e.idEspace and e.id=(SELECT idmanager FROM manager where mail='$mail' ORDER BY a.date)";
 	$vQuery=pg_query($vConn, $vSql);
 	echo "<table border='1'>";

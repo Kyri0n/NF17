@@ -63,6 +63,9 @@ VALUES(30,'Cafeteria');
 INSERT INTO Elements_descripteurs(idElement, Info)
 VALUES(31,'Salle de torture');
 
+INSERT INTO Elements_descripteurs(idElement, Info)
+VALUES(32,'Nowhere');
+
 -- Description
 INSERT INTO Description(ID, Descrip)
 VALUES(200,30);
@@ -70,15 +73,8 @@ VALUES(200,30);
 INSERT INTO Description(ID, Descrip)
 VALUES(300,31);
 
--- Actualites
-INSERT INTO Actualites(Date, ID_Espace, Info)
-VALUES(TO_DATE('01-01-2016','DD-MM-YYYY'),100,'Defile de mode');
-
-INSERT INTO Actualites(Date, ID_Espace, Info)
-VALUES(TO_DATE('01-07-2016','DD-MM-YYYY'),100,'Coktail des anciens');
-
-INSERT INTO Actualites(Date, ID_Espace, Info)
-VALUES(TO_DATE('07-09-2016','DD-MM-YYYY'),300,'Accueil des nouveaux');
+INSERT INTO Description(ID, Descrip)
+VALUES(100,32);
 
 -- Salles Collectives
 INSERT INTO Salles_Collectives(ID_Salle, ID_Espace, Nb_Place)
@@ -93,6 +89,9 @@ VALUES('Magique',100, NULL, true, TO_DATE('01-01-2050','DD-MM-YYYY'), 'illimite'
 
 INSERT INTO Formule(Nom, Tarif, Nb_Jours, Bureau_Individuel, DateFin, Type)
 VALUES('A Sion',10 ,7, false, NULL, 'limite');
+
+INSERT INTO Formule(Nom, Tarif, Nb_Jours, Bureau_Individuel, DateFin, Type)
+VALUES('Tropica',40 ,NULL, false, TO_DATE('01-01-2050','DD-MM-YYYY'), 'illimite');
 
 -- Assoc_CoworkerFormule
 INSERT INTO Assoc_CoworkerFormule(DateCF, Nom_Formule, Coworker)
@@ -115,6 +114,11 @@ VALUES(TO_DATE('01-04-2016','DD-MM-YYYY'),'Magique',3001);
 INSERT INTO Assoc_CoworkerFormule(DateCF, Nom_Formule, Coworker)
 VALUES(TO_DATE('01-05-2016','DD-MM-YYYY'),'Magique',3001);
 
+INSERT INTO Assoc_CoworkerFormule(DateCF, Nom_Formule, Coworker)
+VALUES(TO_DATE('01-03-2016','DD-MM-YYYY'),'Tropica',3002);
+INSERT INTO Assoc_CoworkerFormule(DateCF, Nom_Formule, Coworker)
+VALUES(TO_DATE('01-05-2016','DD-MM-YYYY'),'Tropica',3002);
+
 -- Assoc_Propose
 INSERT INTO Assoc_Propose(ID_Espace,Nom_Formule,Formule_Active)
 VALUES(100,'Magique',false);
@@ -124,6 +128,9 @@ VALUES(100,'A Sion',true);
 
 INSERT INTO Assoc_Propose(ID_Espace,Nom_Formule,Formule_Active)
 VALUES(300,'Magique',true);
+
+INSERT INTO Assoc_Propose(ID_Espace,Nom_Formule,Formule_Active)
+VALUES(200,'Tropica',true);
 
 -- Conference
 INSERT INTO Conference(Titre, DateC, Resume, Intervenant, Coworker, ID_Espace)
@@ -135,14 +142,24 @@ VALUES('La cuisine de Maite', TO_DATE('23-12-2016','DD-MM-YYYY'),'...', NULL, 30
 INSERT INTO Conference(Titre, DateC, Resume, Intervenant, Coworker, ID_Espace)
 VALUES('Sandales et cacahuetes', TO_DATE('05-07-2016','DD-MM-YYYY'),'...', NULL, 3002, 300);
 
+-- Actualites
+INSERT INTO Actualites(Date, ID_Espace, Info)
+VALUES(TO_DATE('05-07-2016','DD-MM-YYYY'),300,'Conférence Sandales et cacahuetes: 18 rue des chevaux bleus');
+INSERT INTO Actualites(Date, ID_Espace, Info)
+VALUES(TO_DATE('23-12-2016','DD-MM-YYYY'),100,'Conférence La cuisine de Maite: 5 rue des chevaux bleus');
+INSERT INTO Actualites(Date, ID_Espace, Info)
+VALUES(TO_DATE('01-06-2016','DD-MM-YYYY'),300,'Conférence Moustiques hivernaux: 5 rue des chevaux bleus');
+
+INSERT INTO Actualites(Date, ID_Espace, Info)
+VALUES(TO_DATE('01-01-2016','DD-MM-YYYY'),100,'Defile de mode');
+
+INSERT INTO Actualites(Date, ID_Espace, Info)
+VALUES(TO_DATE('01-07-2016','DD-MM-YYYY'),100,'Coktail des anciens');
+
+INSERT INTO Actualites(Date, ID_Espace, Info)
+VALUES(TO_DATE('07-09-2016','DD-MM-YYYY'),300,'Accueil des nouveaux');
+
 -- Assoc_Espace_Ouvert_Conference
-INSERT INTO Assoc_Espace_Ouvert_Conference(Titre_conf, Date_conf, ID)
-VALUES('Moustiques hivernaux', TO_DATE('01-06-2016','DD-MM-YYYY'), 100);
-
-INSERT INTO Assoc_Espace_Ouvert_Conference(Titre_conf, Date_conf, ID)
-VALUES('La cuisine de Maite', TO_DATE('23-12-2016','DD-MM-YYYY'), 100);
-
-INSERT INTO Assoc_Espace_Ouvert_Conference(Titre_conf, Date_conf, ID)
-VALUES('Sandales et cacahuetes', TO_DATE('05-07-2016','DD-MM-YYYY'), 300);
+-- vide
 
 COMMIT TRANSACTION;
